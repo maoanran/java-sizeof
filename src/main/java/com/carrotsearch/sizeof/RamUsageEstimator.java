@@ -101,6 +101,8 @@ public final class RamUsageEstimator {
    */
   public final static int NUM_BYTES_OBJECT_ALIGNMENT;
 
+  public final static Set IGNORE_LIST = new HashSet();
+
   /**
    * Sizes of primitive classes.
    */
@@ -521,7 +523,7 @@ public final class RamUsageEstimator {
           }
         }
         totalSize += alignObjectSize(size);
-      } else {
+      } else if (!IGNORE_LIST.contains(ob.getClass().getCanonicalName())) {
         /*
          * Consider an object. Push any references it has to the processing stack
          * and accumulate this object's shallow size. 
